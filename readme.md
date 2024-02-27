@@ -12,7 +12,7 @@ config.json file has to be in the /server directory. It has to look like this:
         "uri": "yourdburi"
     },
     "server": {
-        "port": anyport,
+        "port": "anyport",
         "secretKey": "secretKeyForJWT"
     }
 }
