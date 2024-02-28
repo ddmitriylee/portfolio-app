@@ -21,6 +21,9 @@ const userSchema = mongoose.Schema({
     city: {
         type: String
     },
+    country: {
+        type: String
+    },
     age: {
         type: Number
     },
