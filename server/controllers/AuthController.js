@@ -35,7 +35,7 @@ const loginController = async (req, res) => {
             return;
         }
 
-        user = { login: req.body.login, password: req.body.password };
+        user = req.body;
         const validRes = loginValidator(user)
         if (validRes.error) {
             res.status(422).json({ message: loginValidator(user).error })
@@ -56,5 +56,20 @@ const loginController = async (req, res) => {
     }
 }
 
+const getUserDataController = async (req, res) => {
+    try {
+        const userId = req.body.id;
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: "Cannot find the user" });
+        }
+
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(500).json({ message: error })
+    }
+} 
+
 module.exports.registerController = registerController;
 module.exports.loginController = loginController;
+module.exports.getUserDataController = getUserDataController;

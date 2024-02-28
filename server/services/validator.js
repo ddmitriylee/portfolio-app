@@ -3,7 +3,12 @@ const joi = require('joi');
 const registerValidator = (data) => {
     const schema = joi.object({
         login: joi.string().min(3).required().alphanum(),
-        password: joi.string().min(4).required().alphanum()
+        password: joi.string().min(4).required().alphanum(),
+        isAdmin: joi.boolean(),
+        fullName: joi.string(),
+        city: joi.string(),
+        age: joi.number(),
+        proffession: joi.string()
     })
 
     return schema.validate(data);

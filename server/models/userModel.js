@@ -24,7 +24,7 @@ const userSchema = mongoose.Schema({
     age: {
         type: Number
     },
-    Proffession: {
+    proffession: {
         type: String
     }
 }, { timestamps: true })
