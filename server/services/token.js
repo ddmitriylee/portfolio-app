@@ -10,7 +10,7 @@ const generateToken = (userId, isAdmin) => {
 }
 
 const authenticate = async (req, res, next) => {
-    const token = req.headers.authentorization;
+    const token = req.headers.authorization;
 
     if (!token) {
         res.status(401).json({ message: 'Authorization fail (No token)' });
