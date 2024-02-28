@@ -4,6 +4,7 @@ const config = require('./config.json');
 const cors = require('cors');
 const AuthRouter = require('./routes/AuthRouter');
 const ProjectRouter = require('./routes/ProjectRouter');
+const UserRouter = require('./routes/UserRouter');
 
 const app = express();
 const uri = config.database.uri;
@@ -13,6 +14,7 @@ app.use(cors());
 app.use(express.json());
 app.use('/auth', AuthRouter);
 app.use('/projects', ProjectRouter);
+app.use('/users', UserRouter);
 
 mongoose.connect(uri)
     .then(() => {

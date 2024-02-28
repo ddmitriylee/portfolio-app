@@ -3,7 +3,7 @@ const Project = require('../models/projectModel');
 
 const getPortfolioController = async (req, res) => {
     try {
-        const id = req.headers.id;
+        const id = req.id;
         const portfolio = await Portfolio.find({ owner: id });
         res.status(200).json(portfolio);
     } catch (error) {
@@ -85,7 +85,7 @@ const updateProjectController = async (req, res) => {
 
 const getOneProjectController = async (req, res) => {
     try {
-        const userId = req.headers.id;
+        const userId = req.params.id;
         const portfolio = await Portfolio.find({ owner: userId });
         if (!portfolio) {
             res.status(404).json({ message: `User doesn't have a portfolio` });

@@ -43,8 +43,8 @@ const loginController = async (req, res) => {
             const encryptedUser = await User.findOne({login: validRes.value.login})
             if (await bcrypt.compare(req.body.password, encryptedUser.password)) {
                 const token = generateToken(encryptedUser._id, encryptedUser.isAdmin);
-                res.header('Access-Control-Expose-Headers', 'Authorization,id,isAdmin');
-                res.set({"Authorization": token, "id": encryptedUser._id, "isAdmin": encryptedUser.isAdmin});
+                res.header('Access-Control-Expose-Headers', 'Authorization');
+                res.set({"Authorization": token});
                 res.status(200).json({ message: "Login success" });
             } else {
                 res.status(403).json({ message: "Invalid login or password" });
@@ -56,20 +56,5 @@ const loginController = async (req, res) => {
     }
 }
 
-const getUserDataController = async (req, res) => {
-    try {
-        const userId = req.body.id;
-        const user = await User.findById(userId);
-        if (!user) {
-            return res.status(404).json({ message: "Cannot find the user" });
-        }
-
-        res.status(200).json(user);
-    } catch (error) {
-        res.status(500).json({ message: error })
-    }
-} 
-
 module.exports.registerController = registerController;
 module.exports.loginController = loginController;
-module.exports.getUserDataController = getUserDataController;
