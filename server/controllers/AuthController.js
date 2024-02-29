@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const { regValidator, loginValidator } = require('../services/validator');
 const { generateToken } = require('../services/token');
 const User = require('../models/userModel');
+const sendEmail = require('../services/emailSender');
 
 const registerController = async (req, res) => {
     try {
@@ -13,12 +14,13 @@ const registerController = async (req, res) => {
 
         const newUser = new User(req.body)
         if (await User.findOne({login: newUser.login})) {
-            res.status(400).json({message: "User with such email alredy exists"})
+            res.status(400).json({message: "User with such login alredy exists"})
             return
         }
     
         const result = await newUser.save();
         console.log(`user registered with id=${result._id}`);
+        // sendEmail(newUser.email, "Registration", "Thanks for registrating in my app!");
         res.status(200).json({message: `User registered with id=${result._id}`})
 
     } catch (error) {
@@ -45,6 +47,7 @@ const loginController = async (req, res) => {
                 const token = generateToken(encryptedUser._id, encryptedUser.isAdmin);
                 res.header('Access-Control-Expose-Headers', 'Authorization');
                 res.set({"Authorization": token});
+                // sendEmail(encryptedUser.email, "Login", "You are logged in!");
                 res.status(200).json({ message: "Login success" });
             } else {
                 res.status(403).json({ message: "Invalid login or password" });

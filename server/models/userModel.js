@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-const { number } = require('joi');
 
 const userSchema = mongoose.Schema({
     login: {
@@ -10,6 +9,9 @@ const userSchema = mongoose.Schema({
     password: {
         type: String,
         required: true
+    },
+    email: {
+        type: String
     },
     isAdmin: {
         type: Boolean,

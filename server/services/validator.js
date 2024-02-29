@@ -4,6 +4,7 @@ const registerValidator = (data) => {
     const schema = joi.object({
         login: joi.string().min(3).required().alphanum(),
         password: joi.string().min(4).required().alphanum(),
+        email: joi.string(),
         isAdmin: joi.boolean(),
         fullName: joi.string(),
         city: joi.string(),
