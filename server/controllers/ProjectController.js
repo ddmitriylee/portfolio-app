@@ -3,7 +3,7 @@ const Project = require('../models/projectModel');
 
 const getPortfolioController = async (req, res) => {
     try {
-        const id = req.id;
+        const id = req.params.id;
         const portfolio = await Portfolio.find({ owner: id });
         res.status(200).json(portfolio);
     } catch (error) {
@@ -14,12 +14,12 @@ const getPortfolioController = async (req, res) => {
 const createProjectController = async (req, res) => {
     try {
         const userId = req.id;
+        console.log(userId)
         const newProject = new Project(req.body);
         await newProject.save();
 
-        const project = { _id: newProject.id, name: req.body.name, descr: req.body.descr, images: req.body.images };
-        await Portfolio.updateOne({ owner: userId }, { '$addToSet': { projects: project } });
-        res.status(200).json(Portfolio);
+        const newPortfolio = await Portfolio.updateOne({ owner: userId }, { '$addToSet': { projects: newProject } });
+        res.status(200).json(newPortfolio);
     } catch (error) {
         res.status(500).json({ message: error })
     }

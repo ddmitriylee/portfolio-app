@@ -5,11 +5,14 @@ import "core-js/stable/atob";
 export const UserContext = React.createContext()
 export const UserProvider = ({children}) => {
     const [token, setToken] = useState(localStorage.getItem('token') ?? '');
+    const [id, setId] = useState(localStorage.getItem('id') ?? '');
 
-    const loginSession = (token) => {
+    const loginSession = (token, id) => {
         localStorage.clear()
-        setToken(token)
+        setToken(token);
+        setId(id);
         localStorage.setItem('token', token);
+        localStorage.setItem('id', id);
     }
 
     const isAdmin = () => {
@@ -27,7 +30,7 @@ export const UserProvider = ({children}) => {
     }
 
     return (
-        <UserContext.Provider value = {{token, loginSession, cleanSession, isAdmin}}>
+        <UserContext.Provider value = {{token, loginSession, cleanSession, isAdmin, id}}>
             { children }
         </UserContext.Provider>
     )

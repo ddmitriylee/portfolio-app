@@ -45,8 +45,8 @@ const loginController = async (req, res) => {
             const encryptedUser = await User.findOne({login: validRes.value.login})
             if (await bcrypt.compare(req.body.password, encryptedUser.password)) {
                 const token = generateToken(encryptedUser._id, encryptedUser.isAdmin);
-                res.header('Access-Control-Expose-Headers', 'Authorization');
-                res.set({"Authorization": token});
+                res.header('Access-Control-Expose-Headers', 'Authorization,Id');
+                res.set({"Authorization": token, "Id": encryptedUser._id});
                 // sendEmail(encryptedUser.email, "Login", "You are logged in!");
                 res.status(200).json({ message: "Login success" });
             } else {

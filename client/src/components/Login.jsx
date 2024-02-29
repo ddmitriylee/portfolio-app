@@ -21,10 +21,11 @@ const Login = () => {
             setErrorMessage('');
             loginRequest(user).then(Response => {
                 if (Response.status === 200) {
-                    console.log(Response.headers)
+                    console.log(Response)
                     const token = Response.headers.authorization;
-                    loginSession(token);
-                    navigator('/main/profile');
+                    const id = Response.headers.id;
+                    loginSession(token, id);
+                    navigator(`/main/user/${id}`);
                 }
             })
         }
@@ -50,9 +51,9 @@ const Login = () => {
                 <h2 className="font-bold text-2xl mb-5 text-indigo-950">Sign In</h2>
                 <form onSubmit={loginUser} className="flex flex-col mb-6">
                     <label className="mb-2 text-md text-slate-800" htmlFor="login">Login</label>
-                    <input onChange={(e) => {setLogin(e.target.value)}} className="shadow-md mb-4 bg-slate-100 py-1 px-2" type="text" name="login" id="login" />
+                    <input onChange={(e) => {setLogin(e.target.value)}} className="shadow-md mb-4 bg-slate-100 py-1 px-2" type="text" name="login" id="login" placeholder="vasiliy123" />
                     <label className="mb-2 text-md text-slate-800" htmlFor="password">Password</label>
-                    <input onChange={(e) => {setPassword(e.target.value)}} className="shadow-md mb-6 bg-slate-100 py-1 px-2" type="password" name="password" id="password" />
+                    <input onChange={(e) => {setPassword(e.target.value)}} className="shadow-md mb-6 bg-slate-100 py-1 px-2" type="password" name="password" id="password" placeholder="******" />
                     {errorMessage && <p className="py-1 px-2 bg-red-200 text-red-700 mb-4 shadow-md"><IoWarningOutline className="inline -translate-y-0.5 mr-2"/>{errorMessage}</p>}
                     <button className="shadow-md bg-indigo-700 py-1 text-gray-200 font-semibold" type="submit">Log In</button>
                 </form>

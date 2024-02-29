@@ -63,35 +63,35 @@ const Register = () => {
                 <h2 className="font-bold text-2xl mb-5 text-indigo-950">Sign Up</h2>
                 <form onSubmit={registerUser} className="flex flex-col">
                     <label className="mb-2 text-md text-slate-800" htmlFor="input">Login</label>
-                    <input onChange={(e) => {setLogin(e.target.value)}} className="shadow-md mb-4 bg-slate-100 py-1 px-2 " type="text" name="login" id="login" />
+                    <input onChange={(e) => {setLogin(e.target.value)}} className="shadow-md mb-4 bg-slate-100 py-1 px-2 " type="text" name="login" id="login" placeholder="vasiliy123" />
                     <label className="mb-2 text-md text-slate-800" htmlFor="email">Email</label>
-                    <input onChange={(e) => {setEmail(e.target.value)}} className="shadow-md mb-4 bg-slate-100 py-1 px-2"  type="email" name="email" id="email" />
+                    <input onChange={(e) => {setEmail(e.target.value)}} className="shadow-md mb-4 bg-slate-100 py-1 px-2"  type="email" name="email" id="email" placeholder="vasiliy@example.com" />
                     <label className="mb-2 text-md text-slate-800" htmlFor="fullName">Full Name</label>
-                    <input onChange={(e) => {setFullname(e.target.value)}} className="shadow-md mb-4 bg-slate-100 py-1 px-2 " type="text" name="fullName" id="fullName" />
+                    <input onChange={(e) => {setFullname(e.target.value)}} className="shadow-md mb-4 bg-slate-100 py-1 px-2 " type="text" name="fullName" id="fullName" placeholder="Vasiliy Vasilyev" />
                     <div className="flex flex-nowrap items-center justify-between mb-4">
                         <div className="w-6/12 flex items-center">
                             <label className="mr-auto text-md text-slate-800" htmlFor="password">Password</label>
-                            <input onChange={(e) => {setPassword(e.target.value)}} className="mr-auto shadow-md bg-slate-100 py-1 w-4/6" type="password" name="password" id="password" />
+                            <input onChange={(e) => {setPassword(e.target.value)}} className="mr-auto shadow-md bg-slate-100 px-2 py-1 w-4/6" type="password" name="password" id="password" placeholder="******" />
                         </div>
                         <div className="w-6/12 flex items-center">
                             <label className="text-md text-slate-800" htmlFor="password_repeat">Repeat</label>
-                            <input onChange={(e) => {setRepeatPassword(e.target.value)}} className="ml-auto shadow-md bg-slate-100 py-1 w-9/12" type="password" name="password_repeat" id="password_repeat" />
+                            <input onChange={(e) => {setRepeatPassword(e.target.value)}} className="ml-auto shadow-md bg-slate-100 px-2 py-1 w-9/12" type="password" name="password_repeat" id="password_repeat" placeholder="******" />
                         </div>
                     </div>
                     <label className="mb-2 text-md text-slate-800" htmlFor="age">Age</label>
-                    <input onChange={(e) => {setAge(e.target.value)}} className="shadow-md mb-4 bg-slate-100 py-1 px-2 " type="number" name="age" id="age" />
+                    <input onChange={(e) => {setAge(e.target.value)}} className="shadow-md mb-4 bg-slate-100 py-1 px-2 " type="number" name="age" id="age" placeholder="52" />
                     <div className="flex mb-4 lex flex-nowrap items-center justify-between">
                         <div className="w-6/12 flex items-center">
                             <label className="mr-auto text-md text-slate-800 w-3/12" htmlFor="country">Country</label>
-                            <input onChange={(e) => {setCountry(e.target.value)}} className="mr-auto shadow-md bg-slate-100 w-4/6 py-1 px-2 " type="text" name="country" id="country" />
+                            <input onChange={(e) => {setCountry(e.target.value)}} className="mr-auto shadow-md bg-slate-100 w-4/6 py-1 px-2 " type="text" name="country" id="country" placeholder="Canada" />
                         </div>
                         <div className="w-6/12 flex items-center">
                             <label className="ml-auto mr-auto text-md text-slate-800" htmlFor="city">City</label>
-                            <input onChange={(e) => {setCity(e.target.value)}} className="shadow-md bg-slate-100 w-9/12 py-1 px-2 " type="text" name="city" id="city" />
+                            <input onChange={(e) => {setCity(e.target.value)}} className="shadow-md bg-slate-100 w-9/12 py-1 px-2 " type="text" name="city" id="city" placeholder="Toronto" />
                         </div>
                     </div>
                     <label className="mb-2 text-md text-slate-800" htmlFor="proffession">Proffession</label>
-                    <input onChange={(e) => {setProffession(e.target.value)}} className="shadow-md mb-6 bg-slate-100 py-1 px-2 " type="text" name="proffession" id="proffession" />
+                    <input onChange={(e) => {setProffession(e.target.value)}} className="shadow-md mb-6 bg-slate-100 py-1 px-2 " type="text" name="proffession" id="proffession" placeholder="HR" />
                     {errorMessage && <p className="py-1 px-2 bg-red-200 text-red-700 mb-4 shadow-md"><IoWarningOutline className="inline -translate-y-0.5 mr-2"/>{errorMessage}</p>}
                     <button className="py-2 bg-indigo-800 text-gray-200 shadow-md font-semibold" type="submit">Register</button>
                 </form>

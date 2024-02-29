@@ -14,7 +14,7 @@ export const getUserData = (token) => {
     return api.get(`/`, config);
 }
 
-export const getAllUsersData = (userId, token) => {
+export const getAllUsersData = (token) => {
     const config = {
         headers: {
             'Authorization': token
@@ -22,4 +22,24 @@ export const getAllUsersData = (userId, token) => {
     }
 
     return api.get('/all', config)
+}
+
+export const getUserDataById = (token, userId) => {
+    const config = {
+        headers: {
+            'Authorization': token
+        }
+    }
+
+    return api.get(`/${userId}`, config);
+}
+
+export const deleteUserById = (token, userId) => {
+    const config = {
+        headers: {
+            'Authorization': token
+        }
+    }
+
+    return api.delete(`/${userId}`, config);
 }
