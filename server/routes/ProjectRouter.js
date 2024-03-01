@@ -4,7 +4,7 @@ const { getPortfolioController, createProjectController, deleteProjectController
 
 ProjectRouter.use(authenticate);
 ProjectRouter.get('/:id', getPortfolioController);
-ProjectRouter.get('/:id', getOneProjectController);
+ProjectRouter.get('/project/:id', getOneProjectController);
 ProjectRouter.post('/', createProjectController);
 ProjectRouter.delete('/:id', deleteProjectController);
 ProjectRouter.put('/:id', updateProjectController);

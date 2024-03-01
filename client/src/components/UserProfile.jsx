@@ -6,8 +6,12 @@ import { FaRegUserCircle } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
 import { getUserDataById } from "../helpers/UserRequest";
 import { UserContext } from "../context/UserContext";
-import { getPortfolioRequest } from "../helpers/ProjectRequest";
-import { getDescr } from "../helpers/DescriptionRequest";
+import { getPortfolioRequest, deleteProjectRequest } from "../helpers/ProjectRequest";
+import Slider from 'react-slick';
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { TiDeleteOutline } from "react-icons/ti";
+import { FaEdit } from "react-icons/fa";
 
 const UserProfile = () => {
 
@@ -16,7 +20,18 @@ const UserProfile = () => {
     const navigator = useNavigate();
 
     const [userObject, setUserObject] = useState({});
-    const [projectsArr, setProjectsArr] = useState([]);
+    const [portfolio, setPortfolio] = useState({projects: []});
+
+    const deleteProjectHandler = (projectId) => {
+        const conf = window.confirm('Are you sure?');
+        if (conf) {
+            deleteProjectRequest(token, projectId).then(Response => {
+                if (Response.status === 200) {
+                    console.log("Deleted")
+                }
+            })
+        }
+    }
 
     useEffect(() => {
 
@@ -29,9 +44,11 @@ const UserProfile = () => {
         })
 
         getPortfolioRequest(token, id).then(Response => {
-            setProjectsArr(Response.data);
+            if (Response.status === 200) {
+                setPortfolio(Response.data);
+            }
         }) 
-    }, [])
+    }, [portfolio])
 
     return (
         <div className="container mx-auto max-w-screen-xl">
@@ -50,15 +67,27 @@ const UserProfile = () => {
                     <p className="text-indigo-800 text-md"></p>
                 </div>
                 <div className="border-b border-solid text-left py-3 relative">
-                    <h2 className="font-bold text-indigo-950 text-lg">My Projects</h2>
+                    <h2 className="font-bold text-indigo-950 text-lg mb-3">My Projects</h2>
                     <button onClick={() => navigator('/projects/create')} className="font-bold text-2xl text-indigo-950 absolute top-1.5 right-0">+</button>
                     <ul>
-                        {projectsArr.map(project => 
-                            <li key={project._id}>
-                                <h4>{project.name}</h4>
-                                <p>{project.descr}</p>
-                                <img src={project.image[0]} alt="" />
-                            </li>    
+                        {portfolio && (
+                            portfolio.projects.map(project => (
+                                <li className="p-5 shadow-md rounded bg-indigo-200 mb-2 relative" key={project._id}>
+                                    <h3 className="font-semibold text-indigo-600">{project.name}</h3>
+                                    <p className="text-gray-600 mb-5">{project.descr}</p>
+                                    <Slider>
+                                        {project.images.map(image => (
+                                            <div key={image} className="h-40 w-5/6 px-5">
+                                                <img className="w-full h-full object-contain" key={image} src={image} alt="" />
+                                            </div>
+                                        ))}
+                                    </Slider>
+                                    <div className="absolute top-6 right-3">
+                                        <button onClick={() => {navigator(`/projects/edit/${project._id}`)}} className="text-indigo-600 text-sm -translate-y-0.5 mr-2"><FaEdit /></button>
+                                        <button onClick={() => {deleteProjectHandler(project._id)}} className="text-indigo-600 text-md -translate-y-0.25"><TiDeleteOutline /></button>
+                                    </div>
+                                </li>
+                            ))
                         )}
                     </ul>
                 </div>

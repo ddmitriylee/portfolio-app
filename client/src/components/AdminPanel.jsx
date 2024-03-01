@@ -23,7 +23,7 @@ const AdminPanel = () => {
                 setUserArray(Response.data);
             }
         })
-    }, [])
+    }, [userArray])
 
     const viewProfileHandler = (userId) => {
         navigator(`/main/user/${userId}`);

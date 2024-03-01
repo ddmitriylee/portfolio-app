@@ -23,6 +23,7 @@ function App() {
             <Route path='/admin/adminpanel' element={<AdminPanel />} />
             <Route path='/main/jobs' element={<JobFinder />} />
             <Route path='/projects/create' element={<ProjectCreate />} />
+            <Route path='/projects/edit/:id' element={<ProjectCreate />} />
           </Routes>
           <Footer />
         </BrowserRouter>

@@ -24,14 +24,24 @@ export const createProjectRequest = (token, project) => {
     return api.post('/', project, config);
 }
 
-export const updateProjectRequest = (token, userId) => {
+export const getOneProjectRequest = (token, projectId) => {
     const config = {
         headers: {
             "Authorization": token
         }
     }
 
-    return api.put(`/${userId}`, config);
+    return api.get(`/project/${projectId}`, config);
+}
+
+export const updateProjectRequest = (token, project, projectId) => {
+    const config = {
+        headers: {
+            "Authorization": token
+        }
+    }
+
+    return api.put(`/${projectId}`, project, config);
 }
 
 export const deleteProjectRequest = (token, projectId) => {

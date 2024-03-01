@@ -4,7 +4,7 @@ const Project = require('../models/projectModel');
 const getPortfolioController = async (req, res) => {
     try {
         const id = req.params.id;
-        const portfolio = await Portfolio.find({ owner: id });
+        const portfolio = await Portfolio.findOne({ owner: id });
         res.status(200).json(portfolio);
     } catch (error) {
         res.status(500).json({ message: error })
@@ -17,6 +17,11 @@ const createProjectController = async (req, res) => {
         console.log(userId)
         const newProject = new Project(req.body);
         await newProject.save();
+
+        let portfolio = await Portfolio.findOne({ owner: userId });
+        if (!portfolio) {
+            await Portfolio.create({ owner: userId, projects: [] });
+        }
 
         const newPortfolio = await Portfolio.updateOne({ owner: userId }, { '$addToSet': { projects: newProject } });
         res.status(200).json(newPortfolio);
@@ -39,7 +44,7 @@ const deleteProjectController = async (req, res) => {
 
         await Portfolio.updateOne(
             { _id: portfolio.id },
-            { $pull: { projects: { _id: projectId } } }
+            { $pull: { projects: { _id: project._id } } }
         );
 
         await Project.findByIdAndDelete(projectId);
@@ -57,24 +62,24 @@ const updateProjectController = async (req, res) => {
     try {
         const userId = req.id;
         const updatedProjectData = req.body;
-        const project = await Project.findById(projectId);
-        if (!project) {
-            return res.status(404).json({ message: "Project not found" });
+        const updatedProject = await Project.findByIdAndUpdate(projectId, updatedProjectData, { new: true });
+        const portfolio = await Portfolio.findOne({ 'owner': userId });
+
+        if (!portfolio) {
+        return res.status(404).json({ message: "Portfolio not found" });
         }
 
-        await Project.findByIdAndUpdate(projectId, updatedProjectData, { new: true });
-        await Portfolio.findOneAndUpdate(
-            { owner: userId, 'projects._id': projectId },
-            {
-                $set: {
-                    'projects.$.name': updatedProjectData.name,
-                    'projects.$.descr': updatedProjectData.descr,
-                    'projects.$.images': updatedProjectData.images,
-                },
-            }
-        );
+        const projectIndex = portfolio.projects.findIndex(proj => proj._id.toString() === projectId);
 
-        res.status(200).json({ message: `Updated project with id: ${projectId}` })
+        if (projectIndex === -1) {
+        return res.status(404).json({ message: "Project not found in portfolio" });
+        }
+
+        portfolio.projects[projectIndex] = updatedProject;
+        await portfolio.save();
+
+        res.status(200).json({ message: `Updated project with id: ${projectId}` });
+
     } catch (error) {
         res.status(500).json({ message: error });
     }
@@ -82,13 +87,13 @@ const updateProjectController = async (req, res) => {
 
 const getOneProjectController = async (req, res) => {
     try {
-        const userId = req.params.id;
-        const portfolio = await Portfolio.find({ owner: userId });
-        if (!portfolio) {
-            res.status(404).json({ message: `User doesn't have a portfolio` });
+        const projectId = req.params.id;
+        const project = await Project.findById(projectId);
+        if (!project) {
+            res.status(404).json({ message: "Project not found" });
+            return;
         }
 
-        const project = await Project.findById(req.body.id);
         res.status(200).json(project);
     } catch (error) {
         res.status(500).json({ message: error })
