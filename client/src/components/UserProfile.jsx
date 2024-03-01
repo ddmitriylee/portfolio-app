@@ -78,11 +78,11 @@ const UserProfile = () => {
                 </div>
                 <div className="border-b border-solid text-left py-3 relative">
                     <h2 className="font-bold text-indigo-950 text-lg mb-3">My Projects</h2>
-                    <button onClick={() => navigator('/projects/create')} className="font-bold text-2xl text-indigo-950 absolute top-1.5 right-0">+</button>
+                    <button onClick={() => navigator('/projects/create')} className="font-bold text-2xl text-indigo-950 absolute top-1.5 right-0 transition hover:text-indigo-600">+</button>
                     <ul>
                         {portfolio && (
                             portfolio.projects.map(project => (
-                                <li className="p-5 shadow-md rounded bg-indigo-200 mb-2 relative" key={project._id}>
+                                <li className="p-5 shadow-md rounded bg-indigo-200 mb-2 relative transition hover:bg-indigo-100" key={project._id}>
                                     <h3 className="font-semibold text-indigo-600">{project.name}</h3>
                                     <p className="text-gray-600 mb-5">{project.descr}</p>
                                     <Slider>
@@ -93,8 +93,8 @@ const UserProfile = () => {
                                         ))}
                                     </Slider>
                                     <div className="absolute top-6 right-3">
-                                        <button onClick={() => {navigator(`/projects/edit/${project._id}`)}} className="text-indigo-600 text-sm -translate-y-0.5 mr-2"><FaEdit /></button>
-                                        <button onClick={() => {deleteProjectHandler(project._id)}} className="text-indigo-600 text-md -translate-y-0.25"><TiDeleteOutline /></button>
+                                        <button onClick={() => {navigator(`/projects/edit/${project._id}`)}} className="text-indigo-600 text-sm -translate-y-0.5 transition hover:text-indigo-400 mr-2"><FaEdit /></button>
+                                        <button onClick={() => {deleteProjectHandler(project._id)}} className="text-indigo-600 text-md -translate-y-0.25 transition hover:text-indigo-400"><TiDeleteOutline /></button>
                                     </div>
                                 </li>
                             ))

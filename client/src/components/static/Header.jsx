@@ -23,18 +23,18 @@ const Header = () => {
                     <nav>
                         <ul className="flex flex-row text-gray-200">
                             <li>
-                                <a href="/main/jobs" className="font-bold py-1 px-2">Jobs</a>
+                                <a href="/main/jobs" className="font-bold py-1 px-2 transition hover:text-gray-400">Jobs</a>
                             </li>
-                            {token && <li><a href={path} className="font-bold py-1 px-2">Profile</a></li>}
+                            {token && <li><a href={path} className="font-bold py-1 px-2 transition hover:text-gray-400">Profile</a></li>}
                             {isAdmin() && (
-                                <li><a href="/admin/adminpanel" className="font-bold py-1 px-2">Admin Panel</a></li>
+                                <li><a href="/admin/adminpanel" className="font-bold py-1 px-2 transition hover:text-gray-400">Admin Panel</a></li>
                             )}
                         </ul>
                     </nav>
                     <div className="flex flex-row">
-                        {token ? "" : <a href="/auth/login" className="px-2 py-1 bg-indigo-500 font-semibold text-gray-200 shadow-md">Log In</a>}
-                        {token ? "" : <a href="/auth/register" className="px-2 py-1 bg-indigo-800 font-semibold text-gray-200 shadow-md">Register</a>}
-                        {token ? <button className="bg-red-600 px-2 py-1 text-gray-200 shadow-md" onClick={logOut}>Log Out</button> : ""}
+                        {token ? "" : <a href="/auth/login" className="px-2 py-1 bg-indigo-500 font-semibold text-gray-200 shadow-md transition hover:bg-indigo-700">Log In</a>}
+                        {token ? "" : <a href="/auth/register" className="px-2 py-1 bg-indigo-800 font-semibold text-gray-200 shadow-md transition hover:bg-indigo-900">Register</a>}
+                        {token ? <button className="bg-red-600 px-2 py-1 text-gray-200 shadow-md transition hover:bg-red-800" onClick={logOut}>Log Out</button> : ""}
                     </div>
                 </div>
             </div>
