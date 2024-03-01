@@ -23,7 +23,7 @@ const AdminPanel = () => {
                 setUserArray(Response.data);
             }
         })
-    }, [userArray])
+    }, [])
 
     const viewProfileHandler = (userId) => {
         navigator(`/main/user/${userId}`);
@@ -32,7 +32,7 @@ const AdminPanel = () => {
     const deleteProfileHandler = (userId) => {
         deleteUserById(token, userId).then((Response) => {
             if (Response.status === 200) {
-                console.log('deleted')
+                window.location.reload();
             }
         })
     }

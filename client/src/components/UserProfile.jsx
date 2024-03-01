@@ -7,6 +7,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getUserDataById } from "../helpers/UserRequest";
 import { UserContext } from "../context/UserContext";
 import { getPortfolioRequest, deleteProjectRequest } from "../helpers/ProjectRequest";
+import { getQuote } from "../helpers/QuoteRequest";
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -21,13 +22,14 @@ const UserProfile = () => {
 
     const [userObject, setUserObject] = useState({});
     const [portfolio, setPortfolio] = useState({projects: []});
+    const [quote, setQuote] = useState('');
 
     const deleteProjectHandler = (projectId) => {
         const conf = window.confirm('Are you sure?');
         if (conf) {
             deleteProjectRequest(token, projectId).then(Response => {
                 if (Response.status === 200) {
-                    console.log("Deleted")
+                    window.location.reload();
                 }
             })
         }
@@ -40,15 +42,22 @@ const UserProfile = () => {
         }
 
         getUserDataById(token, id).then(Response => {
-            setUserObject(Response.data)
+            setUserObject(Response.data);
         })
 
         getPortfolioRequest(token, id).then(Response => {
             if (Response.status === 200) {
                 setPortfolio(Response.data);
             }
-        }) 
-    }, [portfolio])
+        })
+        
+        getQuote().then(Response => {
+            if (Response.status === 200) {
+                setQuote(Response.data[0]);
+                console.log(Response.data)
+            }
+        })
+    }, [])
 
     return (
         <div className="container mx-auto max-w-screen-xl">
@@ -63,8 +72,9 @@ const UserProfile = () => {
                     <p className="text-indigo-950"><GrStatusGood className="inline -translate-y-0.5 mr-1" />{userObject.isAdmin ? "Admin" : "User"}</p>
                 </div>
                 <div className="border-y border-solid text-left py-3">
-                    <h2 className="font-bold text-indigo-950 text-lg">About Me</h2>
-                    <p className="text-indigo-800 text-md"></p>
+                    <h2 className="font-bold text-indigo-950 text-lg mb-4">Quote that fits this user</h2>
+                    <p className="text-indigo-800 text-md italic ">"{quote.quote}"</p>
+                    <p className="font-semibold text-indigo-950">by {quote.author}</p>
                 </div>
                 <div className="border-b border-solid text-left py-3 relative">
                     <h2 className="font-bold text-indigo-950 text-lg mb-3">My Projects</h2>
